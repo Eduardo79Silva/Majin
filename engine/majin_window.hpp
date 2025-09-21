@@ -1,0 +1,28 @@
+#pragma once
+
+#define GLFW_INCLUDE_VULKAN
+#include "GLFW/glfw3.h"
+
+#include <string>
+
+namespace majin {
+
+class MajinWindow {
+public:
+  MajinWindow(int w, int h, std::string name);
+  ~MajinWindow();
+
+  MajinWindow(const MajinWindow &) = delete;
+  MajinWindow &operator=(const MajinWindow &) = delete;
+
+  bool shouldClose() { return glfwWindowShouldClose(_window); }
+
+private:
+  void initWindow();
+  const int _width;
+  const int _height;
+  std::string _windowName;
+  GLFWwindow *_window;
+};
+
+} // namespace majin
