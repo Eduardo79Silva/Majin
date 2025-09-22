@@ -1,5 +1,7 @@
 #include "majin_window.hpp"
 #include "GLFW/glfw3.h"
+#include <stdexcept>
+#include <vulkan/vulkan_core.h>
 
 namespace majin {
 
@@ -17,6 +19,14 @@ void MajinWindow::initWindow() {
 
   _window =
       glfwCreateWindow(_width, _height, _windowName.c_str(), nullptr, nullptr);
+}
+
+void MajinWindow::createWindowSurface(VkInstance instance,
+                                      VkSurfaceKHR *surface) {
+  if (glfwCreateWindowSurface(instance, _window, nullptr, surface) !=
+      VK_SUCCESS) {
+    throw std::runtime_error("failed to create window surface");
+  }
 }
 
 } // namespace majin

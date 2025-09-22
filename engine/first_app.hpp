@@ -1,5 +1,6 @@
 #pragma once
 
+#include "majin_device.hpp"
 #include "majin_pipeline.hpp"
 #include "majin_window.hpp"
 
@@ -14,8 +15,11 @@ public:
 
 private:
   MajinWindow _majinWindow{WIDTH, HEIGHT, "Hello Vulkan!"};
-  MajinPipeline _majinPipeline{"../shaders/simple_shader.vert.spv",
-                               "../shaders/simple_shader.frag.spv"};
+  MajinDevice _majinDevice{_majinWindow};
+  MajinPipeline _majinPipeline{
+      _majinDevice, "../shaders/simple_shader.vert.spv",
+      "../shaders/simple_shader.frag.spv",
+      MajinPipeline::defaultPipelineConfigInfo(WIDTH, HEIGHT)};
 };
 
 } // namespace majin
