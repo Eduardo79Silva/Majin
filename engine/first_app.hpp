@@ -1,5 +1,6 @@
 #pragma once
 
+#include "majin_pipeline.hpp"
 #include "majin_window.hpp"
 
 namespace majin {
@@ -13,6 +14,8 @@ public:
 
 private:
   MajinWindow _majinWindow{WIDTH, HEIGHT, "Hello Vulkan!"};
+  MajinPipeline _majinPipeline{"../shaders/simple_shader.vert.spv",
+                               "../shaders/simple_shader.frag.spv"};
 };
 
 } // namespace majin
