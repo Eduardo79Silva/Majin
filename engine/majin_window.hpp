@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <vulkan/vulkan_core.h>
 #define GLFW_INCLUDE_VULKAN
 #include "GLFW/glfw3.h"
@@ -17,6 +18,10 @@ public:
   MajinWindow &operator=(const MajinWindow &) = delete;
 
   bool shouldClose() { return glfwWindowShouldClose(_window); }
+
+  VkExtent2D getExtent() {
+    return {static_cast<uint32_t>(_width), static_cast<uint32_t>(_height)};
+  }
 
   void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
 
