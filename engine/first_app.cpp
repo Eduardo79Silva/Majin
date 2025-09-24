@@ -1,17 +1,18 @@
 #include "first_app.hpp"
 #include "GLFW/glfw3.h"
+#include "majin_model.hpp"
 #include "majin_pipeline.hpp"
 #include <array>
-#include <complex>
 #include <cstdint>
 #include <memory>
-#include <ranges>
 #include <stdexcept>
+#include <vector>
 #include <vulkan/vulkan_core.h>
 
 namespace majin {
 
 FirstApp::FirstApp() {
+  loadModels();
   createPipelineLayout();
   createPipeline();
   createCommandBuffers();
@@ -73,7 +74,7 @@ void FirstApp::createCommandBuffers() {
     VkCommandBufferBeginInfo beginInfo{};
     beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 
-    if (vkBeginCommandBuffer(_commandBuffers.at(i), &beginInfo) != VK_SUCCESS) {
+    if (vkBeginCommandBuffer(_commandBuffers[i], &beginInfo) != VK_SUCCESS) {
       throw std::runtime_error("failed to begin recording command buffer");
     }
 
@@ -92,14 +93,15 @@ void FirstApp::createCommandBuffers() {
     renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
     renderPassInfo.pClearValues = clearValues.data();
 
-    vkCmdBeginRenderPass(_commandBuffers.at(i), &renderPassInfo,
+    vkCmdBeginRenderPass(_commandBuffers[i], &renderPassInfo,
                          VK_SUBPASS_CONTENTS_INLINE);
 
-    _majinPipeline->bind(_commandBuffers.at(i));
-    vkCmdDraw(_commandBuffers.at(i), 3, 1, 0, 0);
+    _majinPipeline->bind(_commandBuffers[i]);
+    _majinModel->bind(_commandBuffers[i]);
+    _majinModel->draw(_commandBuffers[i]);
 
-    vkCmdEndRenderPass(_commandBuffers.at(i));
-    if (vkEndCommandBuffer(_commandBuffers.at(i)) != VK_SUCCESS) {
+    vkCmdEndRenderPass(_commandBuffers[i]);
+    if (vkEndCommandBuffer(_commandBuffers[i]) != VK_SUCCESS) {
       throw std::runtime_error("failed to record command buffer");
     }
   }
@@ -113,11 +115,18 @@ void FirstApp::drawFrame() {
     throw std::runtime_error("failed to acquire next swapchain image");
   }
 
-  result = _majinSwapChain.submitCommandBuffers(&_commandBuffers.at(imageIndex),
+  result = _majinSwapChain.submitCommandBuffers(&_commandBuffers[imageIndex],
                                                 &imageIndex);
 
   if (result != VK_SUCCESS) {
     throw std::runtime_error("failed to present next swapchain image");
   }
+}
+
+void FirstApp::loadModels() {
+  std::vector<MajinModel::Vertex> vertices{
+      {{0.0f, -0.5f}}, {{0.5f, 0.5f}}, {{-0.5f, 0.5f}}};
+
+  _majinModel = std::make_unique<MajinModel>(_majinDevice, vertices);
 }
 } // namespace majin

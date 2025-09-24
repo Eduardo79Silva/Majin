@@ -1,6 +1,7 @@
 #pragma once
 
 #include "majin_device.hpp"
+#include "majin_model.hpp"
 #include "majin_pipeline.hpp"
 #include "majin_swap_chain.hpp"
 #include "majin_window.hpp"
@@ -25,6 +26,7 @@ private:
   void createPipeline();
   void createCommandBuffers();
   void drawFrame();
+  void loadModels();
 
 public:
   static constexpr int WIDTH = 800;
@@ -34,8 +36,9 @@ private:
   MajinWindow _majinWindow{WIDTH, HEIGHT, "Hello Vulkan!"};
   MajinDevice _majinDevice{_majinWindow};
   MajinSwapChain _majinSwapChain{_majinDevice, _majinWindow.getExtent()};
-  std::unique_ptr<MajinPipeline> _majinPipeline;
   VkPipelineLayout _pipelineLayout;
+  std::unique_ptr<MajinPipeline> _majinPipeline;
+  std::unique_ptr<MajinModel> _majinModel;
   std::vector<VkCommandBuffer> _commandBuffers;
 };
 
