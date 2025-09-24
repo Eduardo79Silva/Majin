@@ -36,7 +36,7 @@ public:
   ~MajinPipeline();
 
   MajinPipeline(const MajinPipeline &) = delete;
-  void operator=(const MajinPipeline &) = delete;
+  MajinPipeline &operator=(const MajinPipeline &) = delete;
 
   void bind(VkCommandBuffer commandBuffer);
 

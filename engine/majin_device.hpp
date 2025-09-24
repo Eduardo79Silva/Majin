@@ -34,7 +34,7 @@ public:
 
   // Not copyable or movable
   MajinDevice(const MajinDevice &) = delete;
-  void operator=(const MajinDevice &) = delete;
+  MajinDevice &operator=(const MajinDevice &) = delete;
   MajinDevice(MajinDevice &&) = delete;
   MajinDevice &operator=(MajinDevice &&) = delete;
 

@@ -18,7 +18,7 @@ public:
   ~MajinSwapChain();
 
   MajinSwapChain(const MajinSwapChain &) = delete;
-  void operator=(const MajinSwapChain &) = delete;
+  MajinSwapChain &operator=(const MajinSwapChain &) = delete;
 
   VkFramebuffer getFrameBuffer(int index) {
     return swapChainFramebuffers[index];
