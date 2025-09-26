@@ -1,4 +1,4 @@
 cd ./build
 cmake --build .
-start /d "." app.exe
+start "." app.exe
 cd ..

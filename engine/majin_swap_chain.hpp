@@ -3,6 +3,7 @@
 #include "majin_device.hpp"
 
 // vulkan headers
+#include <memory>
 #include <vulkan/vulkan.h>
 
 // std lib headers
@@ -15,6 +16,8 @@ public:
   static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
   MajinSwapChain(MajinDevice &deviceRef, VkExtent2D windowExtent);
+  MajinSwapChain(MajinDevice &deviceRef, VkExtent2D windowExtent,
+                 std::shared_ptr<MajinSwapChain> previous);
   ~MajinSwapChain();
 
   MajinSwapChain(const MajinSwapChain &) = delete;
@@ -42,6 +45,7 @@ public:
                                 uint32_t *imageIndex);
 
 private:
+  void init();
   void createSwapChain();
   void createImageViews();
   void createDepthResources();
@@ -72,6 +76,7 @@ private:
   VkExtent2D windowExtent;
 
   VkSwapchainKHR swapChain;
+  std::shared_ptr<MajinSwapChain> _oldSwapChain;
 
   std::vector<VkSemaphore> imageAvailableSemaphores;
   std::vector<VkSemaphore> renderFinishedSemaphores;

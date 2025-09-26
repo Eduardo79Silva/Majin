@@ -25,8 +25,11 @@ private:
   void createPipelineLayout();
   void createPipeline();
   void createCommandBuffers();
+  void freeCommandBuffers();
   void drawFrame();
   void loadModels();
+  void recreateSwapChain();
+  void recordCommandBuffer(int imageIndex);
 
 public:
   static constexpr int WIDTH = 800;
@@ -35,8 +38,8 @@ public:
 private:
   MajinWindow _majinWindow{WIDTH, HEIGHT, "Hello Vulkan!"};
   MajinDevice _majinDevice{_majinWindow};
-  MajinSwapChain _majinSwapChain{_majinDevice, _majinWindow.getExtent()};
   VkPipelineLayout _pipelineLayout;
+  std::unique_ptr<MajinSwapChain> _majinSwapChain;
   std::unique_ptr<MajinPipeline> _majinPipeline;
   std::unique_ptr<MajinModel> _majinModel;
   std::vector<VkCommandBuffer> _commandBuffers;

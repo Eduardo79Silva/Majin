@@ -15,10 +15,12 @@ MajinWindow::~MajinWindow() {}
 void MajinWindow::initWindow() {
   glfwInit();
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-  glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+  glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
   _window =
       glfwCreateWindow(_width, _height, _windowName.c_str(), nullptr, nullptr);
+  glfwSetWindowUserPointer(_window, this);
+  glfwSetFramebufferSizeCallback(_window, framebufferResizeCallback);
 }
 
 void MajinWindow::createWindowSurface(VkInstance instance,
@@ -27,6 +29,15 @@ void MajinWindow::createWindowSurface(VkInstance instance,
       VK_SUCCESS) {
     throw std::runtime_error("failed to create window surface");
   }
+}
+
+void MajinWindow::framebufferResizeCallback(GLFWwindow *window, int width,
+                                            int height) {
+  auto majinWindow =
+      reinterpret_cast<MajinWindow *>(glfwGetWindowUserPointer(window));
+  majinWindow->_framebufferResized = true;
+  majinWindow->_width = width;
+  majinWindow->_height = height;
 }
 
 } // namespace majin

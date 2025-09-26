@@ -6,6 +6,7 @@
 #include <cstring>
 #include <iostream>
 #include <limits>
+#include <memory>
 #include <set>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
@@ -14,6 +15,19 @@ namespace majin {
 
 MajinSwapChain::MajinSwapChain(MajinDevice &deviceRef, VkExtent2D extent)
     : device{deviceRef}, windowExtent{extent} {
+  init();
+}
+
+MajinSwapChain::MajinSwapChain(MajinDevice &deviceRef, VkExtent2D extent,
+                               std::shared_ptr<MajinSwapChain> previous)
+    : device{deviceRef}, windowExtent{extent}, _oldSwapChain{previous} {
+  init();
+
+  // clean on swap chain since its no longer needed
+  _oldSwapChain = nullptr;
+}
+
+void MajinSwapChain::init() {
   createSwapChain();
   createImageViews();
   createRenderPass();
@@ -162,7 +176,8 @@ void MajinSwapChain::createSwapChain() {
   createInfo.presentMode = presentMode;
   createInfo.clipped = VK_TRUE;
 
-  createInfo.oldSwapchain = VK_NULL_HANDLE;
+  createInfo.oldSwapchain =
+      _oldSwapChain == nullptr ? VK_NULL_HANDLE : _oldSwapChain->swapChain;
 
   if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapChain) !=
       VK_SUCCESS) {
