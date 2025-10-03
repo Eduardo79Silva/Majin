@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ToS3D)
+project(Majin)
 
 set(CMAKE_CXX_STANDARD 23)
 
