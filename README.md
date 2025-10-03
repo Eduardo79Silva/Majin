@@ -14,6 +14,13 @@
   </p>
 </div>
 
+<br/>
+<div align="center">
+  <img src="https://github.com/Eduardo79Silva/Majin/blob/master/images/hello-triangle.png?raw=true" alt="Game Engine Demo" width="70%">
+</div>
+
+---
+
 **A lightweight, performance-focused game engine built on Vulkan and modern C++.**
 
 Majin provides the foundational systems needed for 3D game development including rendering pipeline management, model loading, and real-time graphics. The architecture separates engine logic from game code, enabling rapid iteration and experimentation.
