@@ -1,7 +1,7 @@
 #pragma once
 
 #include "majin_device.hpp"
-#include "majin_model.hpp"
+#include "majin_game_object.hpp"
 #include "majin_pipeline.hpp"
 #include "majin_swap_chain.hpp"
 #include "majin_window.hpp"
@@ -27,9 +27,10 @@ private:
   void createCommandBuffers();
   void freeCommandBuffers();
   void drawFrame();
-  void loadModels();
+  void loadGameObjects();
   void recreateSwapChain();
   void recordCommandBuffer(int imageIndex);
+  void renderGameObjects(VkCommandBuffer commandBuffer);
 
 public:
   static constexpr int WIDTH = 800;
@@ -41,7 +42,7 @@ private:
   VkPipelineLayout _pipelineLayout;
   std::unique_ptr<MajinSwapChain> _majinSwapChain;
   std::unique_ptr<MajinPipeline> _majinPipeline;
-  std::unique_ptr<MajinModel> _majinModel;
+  std::vector<MajinGameObject> m_gameObjects;
   std::vector<VkCommandBuffer> _commandBuffers;
 };
 
