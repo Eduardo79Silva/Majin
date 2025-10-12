@@ -1,7 +1,10 @@
 #include "majin_model.hpp"
 #include <cstddef>
 #include <cstring>
+#ifdef _WIN32
 #include <urlmon.h>
+#pragma comment(lib, "urlmon.lib")
+#endif
 #include <vector>
 #include <vulkan/vulkan_core.h>
 
