@@ -97,22 +97,6 @@ Run the application:
 ./app
 ```
 
-### Project Structure
-
-```
-Majin/
-├── app/              # Application entry point
-├── engine/           # Core engine systems
-│   ├── first_app.*   # Main application class
-│   ├── majin_device.*      # Vulkan device abstraction
-│   ├── majin_model.*       # Model and vertex management
-│   ├── majin_pipeline.*    # Graphics pipeline
-│   ├── majin_swap_chain.*  # Swap chain management
-│   └── majin_window.*      # Window system
-├── shaders/          # GLSL shader source files
-└── third_party/      # External dependencies
-```
-
 ## Technical Implementation
 
 **Vulkan Integration**  
