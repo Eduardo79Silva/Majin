@@ -28,7 +28,7 @@ Majin provides the foundational systems needed for 3D game development including
 ## Quick Start
 
 ```bash
-git clone --recursive https://github.com/yourusername/Majin.git
+git clone --recursive https://github.com/Eduardo79Silva/Majin.git
 cd Majin
 mkdir build && cd build
 cmake ..
