@@ -24,4 +24,10 @@ private:
   void stepSimulation(std::vector<MajinGameObject> &physicsObjs, float dt);
 };
 
+class Vec2FieldSystem {
+public:
+  void update(const GravityPhysicsSystem &physicsSystem,
+              const std::vector<MajinGameObject> &physicsObjs,
+              std::vector<MajinGameObject> &vectorField);
+};
 } // namespace majin

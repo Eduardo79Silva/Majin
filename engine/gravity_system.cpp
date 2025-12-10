@@ -55,57 +55,21 @@ void GravityPhysicsSystem::stepSimulation(
   }
 }
 
-class Vec2FieldSystem {
-public:
-  void update(const GravityPhysicsSystem &physicsSystem,
-              const std::vector<MajinGameObject> &physicsObjs,
-              std::vector<MajinGameObject> &vectorField) {
+void Vec2FieldSystem::update(const GravityPhysicsSystem &physicsSystem,
+                             const std::vector<MajinGameObject> &physicsObjs,
+                             std::vector<MajinGameObject> &vectorField) {
 
-    for (auto &vf : vectorField) {
-      glm::vec2 direction{};
-      for (auto &obj : physicsObjs) {
-        direction += physicsSystem.computeForce(obj, vf);
-      }
-
-      vf.transform2D.scale.x =
-          0.005f +
-          0.045f *
-              glm::clamp(glm::log(glm::length(direction) + 1) / 3.f, 0.f, 1.f);
-      vf.transform2D.rotation = atan2(direction.y, direction.x);
+  for (auto &vf : vectorField) {
+    glm::vec2 direction{};
+    for (auto &obj : physicsObjs) {
+      direction += physicsSystem.computeForce(obj, vf);
     }
-  }
-};
 
-std::unique_ptr<MajinModel> createSquareModel(MajinDevice &device,
-                                              glm::vec2 offset) {
-  std::vector<MajinModel::Vertex> vertices = {
-      {{-0.5f, -0.5f}}, {{0.5f, 0.5f}},  {{-0.5f, 0.5f}},
-      {{-0.5f, -0.5f}}, {{0.5f, -0.5f}}, {{0.5f, 0.5f}}, //
-  };
-  for (auto &v : vertices) {
-    v.position += offset;
+    vf.transform2D.scale.x =
+        0.005f + 0.045f * glm::clamp(glm::log(glm::length(direction) + 1) / 3.f,
+                                     0.f, 1.f);
+    vf.transform2D.rotation = atan2(direction.y, direction.x);
   }
-  return std::make_unique<MajinModel>(device, vertices);
 }
 
-std::unique_ptr<MajinModel> createCircleModel(MajinDevice &device,
-                                              unsigned int numSides) {
-  std::vector<MajinModel::Vertex> uniqueVertices{};
-
-  for (int i = 0; i < numSides; i++) {
-    float angle = i * glm::two_pi<float>() / numSides;
-    uniqueVertices.push_back({{glm::cos(angle), glm::sin(angle)}});
-  }
-
-  uniqueVertices.push_back({});
-  std::vector<MajinModel::Vertex> vertices{};
-
-  for (int i = 0; i < numSides; i++) {
-    vertices.push_back(uniqueVertices[i]);
-    vertices.push_back(uniqueVertices[(i + 1) % numSides]);
-    vertices.push_back(uniqueVertices[numSides]);
-  }
-
-  return std::make_unique<MajinModel>(device, vertices);
-}
 } // namespace majin
