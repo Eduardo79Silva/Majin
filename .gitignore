@@ -46,3 +46,6 @@ build/
 
 # debug information files
 *.dwo
+
+# Cmake files
+compile_commands.json
