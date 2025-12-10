@@ -4,6 +4,16 @@ project(Majin)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+if(CMAKE_EXPORT_COMPILE_COMMANDS)
+    add_custom_target(
+        copy_compile_commands ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_BINARY_DIR}/compile_commands.json
+            ${CMAKE_SOURCE_DIR}/compile_commands.json
+        DEPENDS ${CMAKE_BINARY_DIR}/compile_commands.json
+    )
+endif()
+
 find_package(Vulkan REQUIRED)
 add_subdirectory(third_party/glfw)
 
