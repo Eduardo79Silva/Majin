@@ -1,9 +1,8 @@
-#include <glm/fwd.hpp>
-#include <glm/trigonometric.hpp>
-#include <memory>
 #pragma one
 
 #include "majin_model.hpp"
+
+#include <memory>
 
 namespace majin {
 

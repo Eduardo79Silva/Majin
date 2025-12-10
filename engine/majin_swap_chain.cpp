@@ -7,7 +7,6 @@
 #include <iostream>
 #include <limits>
 #include <memory>
-#include <set>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
 
@@ -308,6 +307,7 @@ void MajinSwapChain::createFramebuffers() {
 
 void MajinSwapChain::createDepthResources() {
   VkFormat depthFormat = findDepthFormat();
+  swapChainDepthFormat = depthFormat;
   VkExtent2D swapChainExtent = getSwapChainExtent();
 
   depthImages.resize(imageCount());
@@ -392,12 +392,12 @@ VkSurfaceFormatKHR MajinSwapChain::chooseSwapSurfaceFormat(
 
 VkPresentModeKHR MajinSwapChain::chooseSwapPresentMode(
     const std::vector<VkPresentModeKHR> &availablePresentModes) {
-//  for (const auto &availablePresentMode : availablePresentModes) {
-//    if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
-//      std::cout << "Present mode: Mailbox" << std::endl;
-//      return availablePresentMode;
-//    }
-//  }
+  //  for (const auto &availablePresentMode : availablePresentModes) {
+  //    if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
+  //      std::cout << "Present mode: Mailbox" << std::endl;
+  //      return availablePresentMode;
+  //    }
+  //  }
 
   // for (const auto &availablePresentMode : availablePresentModes) {
   //   if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR) {
