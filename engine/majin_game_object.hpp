@@ -6,6 +6,11 @@
 
 namespace majin {
 
+struct RigidBody2dComponent {
+  glm::vec2 velocity;
+  float mass{1.0f};
+};
+
 struct Transform2DComponent {
   glm::vec2 translation{};
   glm::vec2 scale{1.f, 1.f};
@@ -38,12 +43,13 @@ public:
   const id_t getId() { return m_id; }
 
 private:
-  MajinGameObject(id_t objId) : m_id{objId} {}
+  explicit MajinGameObject(id_t objId) : m_id{objId} {}
 
 public:
   std::shared_ptr<MajinModel> model{};
   glm::vec3 color{};
   Transform2DComponent transform2D{};
+  RigidBody2dComponent rigidBody2D{};
 
 private:
   id_t m_id;
