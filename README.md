@@ -97,37 +97,6 @@ Run the application:
 ./app
 ```
 
-## Technical Implementation
-
-**Vulkan Integration**  
-The engine wraps Vulkan's verbose API into manageable components. The device class handles instance creation, physical device selection, and logical device setup. Swap chain management provides double-buffered rendering with automatic recreation on window resize.
-
-**Pipeline Configuration**  
-Graphics pipelines are configurable through structs defining viewport, rasterization, and blending states. The system supports dynamic state for viewport and scissor adjustments. Shader modules load from compiled SPIR-V bytecode generated during build.
-
-**Model System**  
-Vertex data flows through custom binding and attribute descriptions. The model class manages vertex buffers with device memory allocation. Drawing operations bind buffers and issue draw commands to command buffers.
-
-**Command Buffer Management**  
-The application maintains command buffers for each swap chain image. Recording happens per-frame with render pass setup, pipeline binding, and draw call submission. Synchronization primitives coordinate GPU execution.
-
-## Development Roadmap
-
-**Current State**  
-Basic rendering pipeline with triangle rendering, window management, and Vulkan infrastructure.
-
-**Planned Features**
-- 3D model loading with OBJ/glTF support
-- Camera system with transforms and projections
-- Texture loading and sampling
-- Lighting system with multiple light types
-- Scene graph for object hierarchy
-- Input handling system
-- Networking foundation for multiplayer
-- ECS architecture for game objects
-- Physics integration
-- Audio system
-
 ## Technology Stack
 
 - C++23 with modern STL features
@@ -145,10 +114,6 @@ Contributions are welcome. When submitting pull requests:
 - Test changes with the sample application
 - Update documentation for new features
 - Keep commits focused and descriptive
-
-## License
-
-Copyright 2025. All rights reserved.
 
 ## Acknowledgments
 
